@@ -31,7 +31,7 @@ import com.vadosity.resume.tailor.KeywordMatchResults;
 
 @RestController
 @RequestMapping("/resume")
-public class TailorUploadController {
+public class IOController {
 	
 	private static final String INPUT_DOCUMENT_SUFFIX = "_input.docx";
 	public static final String RESUME_OUTPUT_DIRECTORY;
@@ -77,8 +77,8 @@ public class TailorUploadController {
     }
 	
 		
-	@PostMapping("/tailor")
-	public ResponseEntity<KeywordMatchResults> uploadFile(@RequestPart("file") MultipartFile multiPartFile,
+	@PostMapping("/upload")
+	public ResponseEntity<KeywordMatchResults> upload(@RequestPart("file") MultipartFile multiPartFile,
 			@RequestParam(value = "json", defaultValue = "{}") String json) {
 		
 		if (null == multiPartFile.getOriginalFilename()) {
