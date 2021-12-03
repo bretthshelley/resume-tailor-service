@@ -95,6 +95,8 @@ public class IOController {
 			docxUpdate.updateDocument(in, out, docxUpdateRequest);
 			KeywordMatchResults keywordMatchResults=  docxUpdate.getKeywordMatchResults();
 			keywordMatchResults.setOutputFilename(updatedDocumentPath.substring(updatedDocumentPath.lastIndexOf(File.separator)+1));
+			keywordMatchResults.setPercentageMatch(keywordMatchResults.determinePercentageMatched());
+			
 			System.out.println("updated document written to: " +updatedDocumentPath);
 			return ResponseEntity.ok(keywordMatchResults);
 		} catch (Exception e) {
