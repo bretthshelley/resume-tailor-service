@@ -100,6 +100,7 @@ public class IOController {
 			System.out.println("updated document written to: " +updatedDocumentPath);
 			return ResponseEntity.ok(keywordMatchResults);
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			return ResponseEntity.notFound().build();
 		}		
