@@ -1,0 +1,68 @@
+version: '3'
+services:
+  configsvc:
+    image: resumetailor/config-service:1.0
+    container_name: configsvc
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    ports:
+    - "8888:8888"
+    - "8002:8002"
+    environment:
+    - eureka.instance.hostname=eureka
+    - HOST=192.168.0.107
+    - HOSTNAME=configsvc
+    - CONFIG_SERVER_GIT=/config-server-git
+  eureka:
+    image: resumetailor/eureka-service:1.0
+    container_name: eureka
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    ports:
+    - "8761:8761"
+    environment:
+    - HOST=192.168.0.106
+    - HOSTNAME=eureka
+  webservice:
+    image: resumetailor/resume-tailor-service:1.0 
+    container_name: webservice
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    depends_on: 
+    - configsvc
+    - eureka
+    ports:
+    - "8080:8080"
+    - "8001:8001"
+    environment:
+    - eureka.instance.hostname=webservice
+    - HOST=192.168.0.108
+    - HOSTNAME=webservice
+    - SPRING_PROFILES_ACTIVE=development
+    - SPRING_CLOUD_CONFIG_URI=http://configsvc:8888/
+    - SPRING_CONFIG_IMPORT=optional:configserver:http://configsvc:8888/
+    - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka
+    - WAIT_FOR_IT_HOST=configsvc
+    - WAIT_FOR_IT_PORT=8888
+  webapp:
+    image: resumetailor/resume-tailor-webapp:1.0
+    container_name: webapp
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    depends_on: 
+    - configsvc
+    - eureka
+    - webservice
+    ports:
+    - "80:80"
+    - "8000:8000"    
+    environment:
+    - eureka.instance.hostname=webapp
+    - HOST=192.168.0.109
+    - HOSTNAME=webapp
+    - SPRING_PROFILES_ACTIVE=development
+    - SPRING_CLOUD_CONFIG_URI=http://configsvc:8888/
+    - SPRING_CONFIG_IMPORT=optional:configserver:http://configsvc:8888/
+    - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka  
+    - WAIT_FOR_IT_HOST=configsvc
+    - WAIT_FOR_IT_PORT=8888   
