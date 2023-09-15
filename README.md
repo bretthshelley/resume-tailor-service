@@ -23,4 +23,6 @@ From within running image, curl a running config svc on the docker host:  (runni
 
 	curl http://host.docker.internal:8888/resume-tailor-service/development/	
 	
+Note that the overall resume-tailor's docker-compose.yml file is contained in this directory.  This docker-compose should be separately deployed to a linux server to start all of the application containers. 
+
 	
