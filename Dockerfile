@@ -1,14 +1,14 @@
 # example build command
-# docker build -t resumetailor/resume-tailor-service:1.0 .
+# docker build -t resumetailor/resume-tailor-service:1.1 .
 
 # example run and connect
-# docker run --rm -ti resumetailor/resume-tailor-service:1.0 /bin/sh
+# docker run --rm -ti resumetailor/resume-tailor-service:1.1 /bin/sh
 
 # example run as detached
-# docker run -d resumetailor/resume-tailor-service:1.0
+# docker run -d resumetailor/resume-tailor-service:1.1
 
 # example run with port exposed to localhost (docker host)
-# docker run -d -p 8080:8080 -p 8001:8001 --add-host=host.docker.internal:host-gateway resumetailor/resume-tailor-service:1.0
+# docker run -d -p 8080:8080 -p 8001:8001 --add-host=host.docker.internal:host-gateway resumetailor/resume-tailor-service:1.1
 
 FROM adoptopenjdk/openjdk16:latest
 
@@ -17,7 +17,7 @@ WORKDIR /java-apps/
 # enables the use of netstat and curl commands to determine use of ports
 RUN apt-get update && apt-get install -y net-tools
 
-COPY ./build/libs/resume-tailor-service-1.0.jar /java-apps/resume-tailor-service-1.0.jar
+COPY ./build/libs/resume-tailor-service-1.1.jar /java-apps/resume-tailor-service-1.1.jar
 
 # add wait script to make container wait in docker compose
 COPY ./src/main/resources/wait-for-it.sh /java-apps/wait-for-it.sh
@@ -32,10 +32,10 @@ ENV SPRING_CLOUD_CONFIG_URI http://host.docker.internal:8888/
 ENV SPRING_CONFIG_IMPORT optional:configserver:http://host.docker.internal:8888/
 ENV EUREKA_CLIENT_SERVICEURL_DEFAULTZONE http://host.docker.internal:8761/eureka
 
-CMD ["./wait-for-it.sh","neverfindthishostname:8888","-t", "10","--", "java", "-jar", "resume-tailor-service-1.0.jar"]
+CMD ["./wait-for-it.sh","neverfindthishostname:8888","-t", "10","--", "java", "-jar", "resume-tailor-service-1.1.jar"]
 
 # run the java apps at container startup
-# CMD ["java", "-jar", "resume-tailor-service-1.0.jar"]
+# CMD ["java", "-jar", "resume-tailor-service-1.1.jar"]
 
 EXPOSE 8080
 EXPOSE 8001

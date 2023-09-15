@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.vadosity'
-version = '1.0'
+version = '1.1'
 sourceCompatibility = '16'
 
 repositories {
@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.vadosity:resume-tailor-core:1.0'
+	implementation 'com.vadosity:resume-tailor-core:1.1'
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
@@ -34,7 +34,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.vadosity'
             artifactId = 'resume-tailor-service'
-            version = '1.0'
+            version = '1.1'
             from components.java
         }
     }
@@ -48,10 +48,10 @@ dependencyManagement {
 
 jar {
     manifest{
-        attributes ("Fw-Version" : "1.0")
+        attributes ("Fw-Version" : "1.1")
     }
     baseName 'resume-tailor-service'
-    version '1.0' 
+    version '1.1' 
 }
 
 test {
