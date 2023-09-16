@@ -1,7 +1,12 @@
+# Backend Service Components
+
+The red arrows indicate how this project's build artifacts fit into the Resume-Tailor application architecture
+
+<img src="vadosity-service.drawio.png"></img>
+
 To build locally:
 	
 	gradle clean build
-
 
 To start this on Windows:
 
